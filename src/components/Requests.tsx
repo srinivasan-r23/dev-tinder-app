@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
-import { addRequest } from "../utils/requestSlice";
+import { addRequest, removeRequest } from "../utils/requestSlice";
 
 const Requests = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,6 @@ const Requests = () => {
       });
       const data = await response.json();
       dispatch(addRequest(data));
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -22,6 +21,21 @@ const Requests = () => {
     fetchRequests();
   }, []);
 
+  const reviewRequests = async (status: string, id: string) => {
+    try {
+      const response = await fetch(
+        BASE_URL + "/request/review/" + status + "/" + id,
+        {
+          credentials: "include",
+          method: "POST",
+        }
+      );
+      await response?.json();
+      dispatch(removeRequest(id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (requests?.length === 0)
     return (
       <p className="text-2xl text-center text-gray-400">
@@ -52,8 +66,18 @@ const Requests = () => {
             <p>{request?.fromUserId?.about}</p>
           </div>
           <div className="flex m-2 space-x-3">
-            <button className="btn btn-active btn-primary">Reject</button>
-            <button className="btn btn-active btn-secondary">Accept</button>
+            <button
+              className="btn btn-active btn-primary"
+              onClick={() => reviewRequests("ignored", request?._id)}
+            >
+              Reject
+            </button>
+            <button
+              className="btn btn-active btn-secondary"
+              onClick={() => reviewRequests("accepted", request?._id)}
+            >
+              Accept
+            </button>
           </div>
         </div>
       ))}

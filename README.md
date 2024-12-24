@@ -23,3 +23,5 @@
 - Display feed
 - Edit Profile
 - Connection page
+- Request page
+- Accept or Ignore API intg.
