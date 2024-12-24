@@ -7,6 +7,8 @@ import { BASE_URL } from "../utils/constants";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,16 +23,20 @@ const Login = () => {
         credentials: "include",
         body: JSON.stringify({ email, password }),
       });
+      if (!response.ok) {
+        // Handle HTTP errors
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
       const data = await response.json();
       if (data?.user) {
         dispatch(addUser(data?.user));
         navigate("/");
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setError(error?.message ?? "An error occurred");
     }
   };
-
   return (
     <div className="flex items-center justify-center min-h-1/2 bg-base-200">
       <div className="w-full max-w-md p-8 space-y-6 bg-base-200 rounded-lg shadow-md">
@@ -68,6 +74,7 @@ const Login = () => {
           >
             Login
           </button>
+          {error && <p className="text-red-500 text-center">{error}</p>}
         </form>
       </div>
     </div>
