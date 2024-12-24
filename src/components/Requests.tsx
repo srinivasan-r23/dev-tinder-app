@@ -68,7 +68,7 @@ const Requests = () => {
           <div className="flex m-2 space-x-3">
             <button
               className="btn btn-active btn-primary"
-              onClick={() => reviewRequests("ignored", request?._id)}
+              onClick={() => reviewRequests("rejected", request?._id)}
             >
               Reject
             </button>

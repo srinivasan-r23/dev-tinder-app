@@ -21,7 +21,7 @@ const Feed = () => {
   useEffect(() => {
     getFeed();
   }, []);
-  if (!feed) return <></>;
+  if (!feed) return <>No New Requests available</>;
   return (
     <div className="flex items-center justify-center flex-col ">
       {feed?.map((user: any) => (
