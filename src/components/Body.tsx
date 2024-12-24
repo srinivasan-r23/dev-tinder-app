@@ -26,8 +26,6 @@ const Body = () => {
         navigate("/login");
         console.log(error);
       }
-    } else {
-      navigate("/login");
     }
   };
 

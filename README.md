@@ -18,4 +18,8 @@
 - Login and Logout
 - Add user to Redux
 - Redirect to login is not authenticated.
-- Error validation
+- Error validation-
+- Get Feed
+- Display feed
+- Edit Profile
+- 
