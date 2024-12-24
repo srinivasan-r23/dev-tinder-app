@@ -7,6 +7,7 @@ const Navbar = () => {
   const user = useSelector((state: any) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const logoutHandler = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const response = await fetch(BASE_URL + "/logout", {
@@ -22,7 +23,9 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">DevTinder 👨🏻‍💻</Link>
+        <Link to="/" className="btn btn-ghost text-xl">
+          DevTinder 👨🏻‍💻
+        </Link>
       </div>
       {user?.photoUrl && (
         <div className="flex-none gap-2 mx-3">
@@ -48,7 +51,14 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to={"/connections"} className="justify-between">
+                  Connections
+                </Link>
+              </li>
+              <li>
+                <Link to={"/requests"} className="justify-between">
+                  Requests
+                </Link>
               </li>
               <li>
                 <a onClick={logoutHandler}>Logout</a>
