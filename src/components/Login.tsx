@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router";
+import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleLogin = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(BASE_URL + "/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -18,10 +22,9 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
-      console.log(data.user)
       if (data?.user) {
         dispatch(addUser(data?.user));
-        
+        navigate("/");
       }
     } catch (error) {
       console.error(error);

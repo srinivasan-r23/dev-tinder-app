@@ -1,16 +1,19 @@
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { BASE_URL } from "../utils/constants";
 
 const Navbar = () => {
   const user = useSelector((state: any) => state.user);
+  const navigate = useNavigate();
 
   const logoutHandler = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/logout", {
+    const response = await fetch(BASE_URL + "/logout", {
       method: "POST",
       credentials: "include",
     });
     const data = await response.json();
-    if (data) window.location.href = "/login";
+    if (data) navigate("/login");
   };
   return (
     <div className="navbar bg-base-100">
