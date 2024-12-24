@@ -22,4 +22,4 @@
 - Get Feed
 - Display feed
 - Edit Profile
-- 
+- Connection page
